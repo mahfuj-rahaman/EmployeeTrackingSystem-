@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/EmployeeTrackingSystem/.vs/EmployeeTrackingSystem
+/src/EmployeeTrackingSystem/BuildingBlocks/obj
+/src/EmployeeTrackingSystem/BuildingBlocks.Messaging/obj
+/src/EmployeeTrackingSystem/YarpApiGateway/obj
