@@ -1,15 +1,17 @@
-# EmployeeTrackingSystem-
+# <h1>Employee Tracking System</h1>
+<hr>
 
+<h2>High-Level Design Overview</h2>
 
-High-Level Design Overview
-1. Architecture Overview
+<h3> 1. Architecture Overview</h3>
+
 Microservices Architecture: The system will be designed using a microservices architecture to ensure modularity, scalability, and ease of maintenance.
 
 CQRS and Vertical Slicing: The system will be designed following the CQRS (Command Query Responsibility Segregation) pattern to separate the read and write operations. Vertical slicing will be used to split the application into smaller, more manageable units.
 
 API Versioning: API versioning will be implemented to ensure backward compatibility and smooth transitions between different versions of the APIs.
 
-2. Technology Stack
+<h3> 2. Technology Stack</h3>
 Backend Framework: ASP.NET Core 8.0
 
 Mediator Pattern: MediatR for handling commands and queries
@@ -20,7 +22,8 @@ Database (Command): MSSQL for command operations
 
 Database (Query): Redis for query operations
 
-3. Microservices
+<h3> 3. Microservices</h3>
+
 Employee Service:
 
 Responsibilities: Manage employee data including personal details, department, and designation.
@@ -45,7 +48,8 @@ Responsibilities: Centralized login system for authentication and authorization.
 
 Endpoints: Login, Register, Token management.
 
-4. CQRS Implementation
+<h3> 4. CQRS Implementation</h3>
+
 Commands:
 
 Handled by MSSQL using MediatR.
@@ -58,19 +62,21 @@ Handled by Redis using MediatR.
 
 Queries will be used for read-only operations (e.g., GetEmployeeQuery, GetDepartmentQuery).
 
-5. API Versioning
+<h3>5. API Versioning</h3>
+
 Versioning Strategy:
 
 URL Versioning: APIs will be versioned using URLs (e.g., /api/v1/employees, /api/v2/employees).
 
 Header Versioning: APIs can also support versioning through custom headers.
 
-6. MassTransit Integration
+<h3>6. MassTransit Integration</h3>
+
 Message Bus: MassTransit will be used for event-driven communication between microservices.
 
 Event Handling: Each microservice will publish and subscribe to events using MassTransit.
 
-7. Authentication and Authorization
+<h3> 7. Authentication and Authorization</h3>
 Centralized Login: The Authentication Service will handle user login and token management.
 
 JWT Tokens: JSON Web Tokens (JWT) will be used for secure communication between clients and services.
