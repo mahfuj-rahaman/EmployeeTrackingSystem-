@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{33CB867D-9FD8-4E5F-A755-94F2DAC525AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{B77C53EB-008A-445F-ACD4-FCBD5E9FA4C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{EC83230F-7DE0-4F6A-8B3B-9847F9946B66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YarpApiGateway", "YarpApiGateway\YarpApiGateway.csproj", "{2418E539-79CC-422A-9EAA-D3A1CE40C7DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks", "BuildingBlocks\BuildingBlocks.csproj", "{22C0F0F2-2796-4186-A72D-D965D3834809}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Messaging", "BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj", "{1FEC862C-9114-4509-90C5-789A629397B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{8D9490C4-FB18-43B3-95FB-D84BA1FC99E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmployeeService", "EmployeeService", "{C3ED4274-358C-4A66-BEC2-75F51DCFBB91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DepartmentService", "DepartmentService", "{8BAD350D-B9C0-43A3-A235-894051E94639}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DesignationService", "DesignationService", "{BFDB509A-F09E-46F9-870C-9BF708FE3300}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2418E539-79CC-422A-9EAA-D3A1CE40C7DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2418E539-79CC-422A-9EAA-D3A1CE40C7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2418E539-79CC-422A-9EAA-D3A1CE40C7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2418E539-79CC-422A-9EAA-D3A1CE40C7DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C0F0F2-2796-4186-A72D-D965D3834809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C0F0F2-2796-4186-A72D-D965D3834809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C0F0F2-2796-4186-A72D-D965D3834809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C0F0F2-2796-4186-A72D-D965D3834809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FEC862C-9114-4509-90C5-789A629397B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FEC862C-9114-4509-90C5-789A629397B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FEC862C-9114-4509-90C5-789A629397B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FEC862C-9114-4509-90C5-789A629397B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2418E539-79CC-422A-9EAA-D3A1CE40C7DD} = {EC83230F-7DE0-4F6A-8B3B-9847F9946B66}
+		{22C0F0F2-2796-4186-A72D-D965D3834809} = {B77C53EB-008A-445F-ACD4-FCBD5E9FA4C3}
+		{1FEC862C-9114-4509-90C5-789A629397B8} = {B77C53EB-008A-445F-ACD4-FCBD5E9FA4C3}
+		{8D9490C4-FB18-43B3-95FB-D84BA1FC99E1} = {33CB867D-9FD8-4E5F-A755-94F2DAC525AA}
+		{C3ED4274-358C-4A66-BEC2-75F51DCFBB91} = {33CB867D-9FD8-4E5F-A755-94F2DAC525AA}
+		{8BAD350D-B9C0-43A3-A235-894051E94639} = {33CB867D-9FD8-4E5F-A755-94F2DAC525AA}
+		{BFDB509A-F09E-46F9-870C-9BF708FE3300} = {33CB867D-9FD8-4E5F-A755-94F2DAC525AA}
+	EndGlobalSection
+EndGlobal
