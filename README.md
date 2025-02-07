@@ -1,3 +1,11 @@
+for running the code please follow the instruction
+<br>
+//stand alone
+<br>
+<code> update-database -Context AuthDBContext </code>
+<br>
+
+
 # <h1>Employee Tracking System</h1>
 <hr>
 
