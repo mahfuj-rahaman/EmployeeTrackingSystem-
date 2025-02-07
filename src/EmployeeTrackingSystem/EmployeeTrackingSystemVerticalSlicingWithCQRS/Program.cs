@@ -1,4 +1,6 @@
+using FluentValidation;
 
+using Carter;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbContexts;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Helpers;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices;
@@ -28,8 +30,8 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
 
             #region DbContext
             Console.WriteLine(builder.Configuration.GetConnectionString("db"));
-            builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("db")), ServiceLifetime.Transient);
-            builder.Services.AddDbContext<AuthDBContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("identity")), ServiceLifetime.Transient);
+            builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("db")));
+            builder.Services.AddDbContext<AuthDBContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("identity")));
             #endregion
 
             #region Initializers
@@ -83,6 +85,14 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
 
             #endregion
 
+            var assembly = typeof(Program).Assembly;
+            builder.Services.AddMediatR(config =>
+                config.RegisterServicesFromAssemblies(assembly)
+            );
+
+            builder.Services.AddCarter();
+
+            builder.Services.AddValidatorsFromAssemblies([assembly]);
 
             var app = builder.Build();
 
@@ -98,7 +108,14 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
             app.UseAuthorization();
 
 
-            app.MapControllers();
+
+            // Configure middleware
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+
+            // Register endpoints using the extension method
+            app.MapCarter();
 
             app.Run();
         }
