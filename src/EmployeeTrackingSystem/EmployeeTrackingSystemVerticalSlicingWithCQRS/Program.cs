@@ -35,13 +35,13 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
             #endregion
 
             #region Initializers
-            builder.Services.AddTransient<IdentityInitailizer>();
+            builder.Services.AddTransient<DataInitailizer>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             #endregion
 
             #region HostedServices
-            builder.Services.AddHostedService<IdentityInitialerService>();
+            builder.Services.AddHostedService<DataSeedService>();
             #endregion
 
 

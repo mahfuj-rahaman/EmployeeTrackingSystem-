@@ -1,9 +1,9 @@
 ﻿namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices
 {
-    public class IdentityInitialerService : IHostedService
+    public class DataSeedService : IHostedService
     {
         private readonly IServiceProvider serviceProvider;
-        public IdentityInitialerService(IServiceProvider serviceProvider)
+        public DataSeedService(IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
@@ -12,7 +12,7 @@
         {
             using (var scope = serviceProvider.CreateScope())
             {
-                var seeder = scope.ServiceProvider.GetRequiredService<IdentityInitailizer>();
+                var seeder = scope.ServiceProvider.GetRequiredService<DataInitailizer>();
                 await seeder.SeedAsync();
             }
         }
