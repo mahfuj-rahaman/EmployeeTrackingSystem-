@@ -6,3 +6,5 @@
 /src/EmployeeTrackingSystem/BuildingBlocks/obj
 /src/EmployeeTrackingSystem/BuildingBlocks.Messaging/obj
 /src/EmployeeTrackingSystem/YarpApiGateway/obj
+/src/EmployeeTrackingSystem/.vs/ProjectEvaluation
+/src/EmployeeTrackingSystem/EmployeeTrackingSystemVerticalSlicingWithCQRS/obj
