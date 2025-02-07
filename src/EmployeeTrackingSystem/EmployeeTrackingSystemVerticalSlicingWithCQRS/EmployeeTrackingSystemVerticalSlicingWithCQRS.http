@@ -1,0 +1,6 @@
+@EmployeeTrackingSystemVerticalSlicingWithCQRS_HostAddress = http://localhost:5262
+
+GET {{EmployeeTrackingSystemVerticalSlicingWithCQRS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
