@@ -6,6 +6,7 @@ using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbContexts;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Helpers;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
@@ -46,13 +47,13 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
             .ReportApiVersions()
             .Build();
 
-            app.MapGet("/api/v{version:apiVersion}/employees/{id}", async (Guid id, ISender sender) =>
+            app.MapGet("/api/v{version:apiVersion}/employees/{id}",[Authorize] async (Guid id, ISender sender) =>
             {
                 var query = new GetEmployee.Query(id);
 
                 var result = await sender.Send(query);
                 return new { Id = result };
-            }).WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
+            }).WithName("GetEmployeeById").WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
         }
     }
 }

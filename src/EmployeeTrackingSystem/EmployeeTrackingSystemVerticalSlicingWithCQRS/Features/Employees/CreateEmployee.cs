@@ -8,6 +8,7 @@ using EmployeeTrackingSystemVerticalSlicingWithCQRS.Contracts.Employee;
 using Mapster;
 using Asp.Versioning.Builder;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
 {
@@ -83,13 +84,13 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
             .ReportApiVersions()
             .Build();
 
-            app.MapPost("/api/v{version:apiVersion}/employees", async (CreateEmployeeRequest request, ISender sender) =>
+            app.MapPost("/api/v{version:apiVersion}/employees",[Authorize] async (CreateEmployeeRequest request, ISender sender) =>
             {
                 var command = request.Adapt<CreateEmployee.Command>();
 
                 var result = await sender.Send(command);
                 return new { Id = result };
-            }).WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
+            }).WithName("CreateEmployee").WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
         }
     }
 }
