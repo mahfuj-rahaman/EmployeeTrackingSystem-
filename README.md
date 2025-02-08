@@ -6,7 +6,7 @@ for running the code please follow the instruction
 <code> docker compose up -d --build </code>
 <br>
 
-//for running locally on visual studio please change the connection string from App <b>appsettings.Development.json</b>
+//for running locally on visual studio please change the connection string from <b>appsettings.Development.json</b>
 <br>
 
 # <h1>Employee Tracking System</h1>
