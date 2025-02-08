@@ -1,11 +1,13 @@
 for running the code please follow the instruction
 <br>
-//docker compose
 
+//docker compose
 <br>
 <code> docker compose up -d --build </code>
 <br>
 
+//for running locally on visual studio please change the connection string from App <b>appsettings.Development.json</b>
+<br>
 
 # <h1>Employee Tracking System</h1>
 <hr>
