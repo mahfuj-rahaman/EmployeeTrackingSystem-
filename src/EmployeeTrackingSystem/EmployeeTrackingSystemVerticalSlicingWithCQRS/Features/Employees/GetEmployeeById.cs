@@ -11,34 +11,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
 {
-    public static class GetEmployee
+    public static class GetEmployeeById
     {
-        public record Query : IRequest<Result<List<EmployeeResponse>>>;
-
-        public class Handler : IRequestHandler<Query, Result<List<EmployeeResponse>>>
+        public record Query(Guid Id) : IRequest<Result<EmployeeResponse>>;
+        public class Handler : IRequestHandler<Query, Result<EmployeeResponse>>
         {
             private readonly ApplicationDbContext _context;
             public Handler(ApplicationDbContext context)
             {
                 _context = context;
             }
-            public async Task<Result<List<EmployeeResponse>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<EmployeeResponse>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var employee = await _context.Employees
                     .Include(e => e.Department)
                     .Include(e => e.Designation)
-                    .ToListAsync();
-                if (!employee.Any())
+                    .FirstOrDefaultAsync(e => e.Id == request.Id);
+                if (employee == null)
                 {
-                    return Result<List<EmployeeResponse>>.Failure(new List<string> { "no Employee found" });
+                    return Result<EmployeeResponse>.Failure(new List<string> { "Employee not found" });
                 }
-                var response = employee.Adapt<List<EmployeeResponse>>();
-                return Result<List<EmployeeResponse>>.Success(response);
+                var response = employee.Adapt<EmployeeResponse>();
+                return Result<EmployeeResponse>.Success(response);
             }
         }
     }
 
-    public class GetEmployeeEndpoint : ICarterModule
+    public class GetEmployeeByIdEndpoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
@@ -47,12 +46,14 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
             .HasApiVersion(new ApiVersion(2))
             .ReportApiVersions()
             .Build();
-            app.MapGet("/api/v{version:apiVersion}/employees", [Authorize] async (ISender sender) =>
+
+            app.MapGet("/api/v{version:apiVersion}/employees/{id}",[Authorize] async (Guid id, ISender sender) =>
             {
-                var query = new GetEmployee.Query();
+                var query = new GetEmployeeById.Query(id);
+
                 var result = await sender.Send(query);
-                return new { Employees = result };
-            }).WithName("GetEmployee").WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
+                return new { Id = result };
+            }).WithName("GetEmployeeById").WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
         }
     }
 }
