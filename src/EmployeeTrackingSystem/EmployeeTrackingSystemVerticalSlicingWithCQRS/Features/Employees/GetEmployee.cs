@@ -1,4 +1,5 @@
-﻿using EmployeeTrackingSystemVerticalSlicingWithCQRS.Contracts.Employee;
+﻿using Carter;
+using EmployeeTrackingSystemVerticalSlicingWithCQRS.Contracts.Employee;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbContexts;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Helpers;
 using Mapster;
@@ -32,4 +33,18 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
             }
         }
     }
+
+    //public class GetEmployeeEndpoint : ICarterModule
+    //{
+    //    public void AddRoutes(IEndpointRouteBuilder app)
+    //    {
+    //        app.MapGet("/api/employees/{id}", async (CreateEmployeeRequest request, ISender sender) =>
+    //        {
+    //            var command = request.Adapt<CreateEmployee.Command>();
+
+    //            var result = await app.ServiceProvider.GetRequiredService<IMediator>().Send(command);
+    //            return new { Id = result };
+    //        });
+    //    }
+    //}
 }
