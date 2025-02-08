@@ -9,3 +9,6 @@
 /src/EmployeeTrackingSystem/.vs/ProjectEvaluation
 /src/EmployeeTrackingSystem/EmployeeTrackingSystemVerticalSlicingWithCQRS/obj
 /src/EmployeeTrackingSystem/EmployeeTrackingSystemVerticalSlicingWithCQRS/bin
+/src/EmployeeTrackingSystem/bin/Debug
+/src/EmployeeTrackingSystem/obj/Docker
+/src/EmployeeTrackingSystem/obj/Debug
