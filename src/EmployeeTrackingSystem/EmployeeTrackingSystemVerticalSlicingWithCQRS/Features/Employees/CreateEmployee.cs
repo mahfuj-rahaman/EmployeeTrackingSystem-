@@ -3,14 +3,15 @@ using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbContexts;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbModels;
 using FluentValidation;
 using MediatR;
-
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Helpers;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Contracts.Employee;
 using Mapster;
+using Asp.Versioning.Builder;
+using Asp.Versioning;
 
 namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
 {
-    public class CreateEmployee
+    public static class CreateEmployee
     {
         public class Command : IRequest<Result<Guid>>
         {
@@ -49,9 +50,9 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
                 var validationResult = _validator.Validate(request);
                 if (!validationResult.IsValid)
                 {
-
+                    var result = Result<Guid>.Failure(validationResult);
+                    return result;
                 }
-                var result = Result<Guid>.Failure(validationResult);
 
                 var employee = new Employee
                 {
@@ -66,8 +67,7 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
                 _context.Employees.Add(employee);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                //return Result<gu> employee.Id;
-                return result = Result<Guid>.Success(employee.Id);
+                return Result<Guid>.Success(employee.Id);
             }
         }
 
@@ -77,13 +77,19 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/api/employees", async (CreateEmployeeRequest request, ISender sender) =>
+            ApiVersionSet apiVersionSet = app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1))
+            .HasApiVersion(new ApiVersion(2))
+            .ReportApiVersions()
+            .Build();
+
+            app.MapPost("/api/v{version:apiVersion}/employees", async (CreateEmployeeRequest request, ISender sender) =>
             {
                 var command = request.Adapt<CreateEmployee.Command>();
 
-                var result = await app.ServiceProvider.GetRequiredService<IMediator>().Send(command);
+                var result = await sender.Send(command);
                 return new { Id = result };
-            });
+            }).WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
         }
     }
 }

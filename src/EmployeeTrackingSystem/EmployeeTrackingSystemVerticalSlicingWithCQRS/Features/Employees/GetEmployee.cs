@@ -1,4 +1,6 @@
-﻿using Carter;
+﻿using Asp.Versioning;
+using Asp.Versioning.Builder;
+using Carter;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Contracts.Employee;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbContexts;
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Helpers;
@@ -34,17 +36,23 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Features.Employees
         }
     }
 
-    //public class GetEmployeeEndpoint : ICarterModule
-    //{
-    //    public void AddRoutes(IEndpointRouteBuilder app)
-    //    {
-    //        app.MapGet("/api/employees/{id}", async (CreateEmployeeRequest request, ISender sender) =>
-    //        {
-    //            var command = request.Adapt<CreateEmployee.Command>();
+    public class GetEmployeeEndpoint : ICarterModule
+    {
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            ApiVersionSet apiVersionSet = app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1))
+            .HasApiVersion(new ApiVersion(2))
+            .ReportApiVersions()
+            .Build();
 
-    //            var result = await app.ServiceProvider.GetRequiredService<IMediator>().Send(command);
-    //            return new { Id = result };
-    //        });
-    //    }
-    //}
+            app.MapGet("/api/v{version:apiVersion}/employees/{id}", async (Guid id, ISender sender) =>
+            {
+                var query = new GetEmployee.Query(id);
+
+                var result = await sender.Send(query);
+                return new { Id = result };
+            }).WithApiVersionSet(apiVersionSet).MapToApiVersion(1);
+        }
+    }
 }

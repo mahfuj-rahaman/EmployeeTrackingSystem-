@@ -11,8 +11,8 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbModels
         public string ImageUrl { get;  set; } = default!;
         public Guid DesignationId { get;  set; } = default!;
         public Guid DepartmentId { get;  set; } = default!;
-        public Designation Designation { get;  set; } = default!;
-        public Department Department { get;  set; } = default!;
+        public Designation? Designation { get;  set; } = default!;
+        public Department? Department { get;  set; } = default!;
     }
     
 }

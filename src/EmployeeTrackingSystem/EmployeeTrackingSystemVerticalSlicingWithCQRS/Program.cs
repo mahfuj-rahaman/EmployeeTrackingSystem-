@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Asp.Versioning.Builder;
+using Asp.Versioning;
+using MediatR;
 
 namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
 {
@@ -79,8 +82,6 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
 
             #region Helpers
 
-
-            builder.Services.AddTransient<AuthHelper>();
             builder.Services.AddTransient<LoggedInUserHelper>();
 
             #endregion
@@ -93,6 +94,22 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
             builder.Services.AddCarter();
 
             builder.Services.AddValidatorsFromAssemblies([assembly]);
+
+
+            builder.Services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(
+                    new UrlSegmentApiVersionReader()
+                    //,new HeaderApiVersionReader("X-Api-Version")
+                    );
+            }).AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
+            });
 
             var app = builder.Build();
 
@@ -117,7 +134,14 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS
             // Register endpoints using the extension method
             app.MapCarter();
 
+            ApiVersionSet apiVersionSet = app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1))
+            .HasApiVersion(new ApiVersion(2))
+            .ReportApiVersions()
+            .Build();
+
             app.Run();
+
         }
     }
 }

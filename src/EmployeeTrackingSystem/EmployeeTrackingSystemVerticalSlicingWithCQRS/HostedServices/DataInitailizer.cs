@@ -2,6 +2,8 @@
 using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Numerics;
 
 namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices
 {
@@ -10,6 +12,7 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices
         private string[] rolesDefault = new string[] { "Super Admin", "Admin", "User" };
         private string[] designationsDefault = new string[] { "Manager", "Sr Executive", "Jr Executive" };
         private string[] departmentsDefault = new string[] { "Sales", "HR" };
+        private string[] employeesDefault = new string[] { "Admin" };
 
         private readonly ApplicationDbContext _context;
         private UserManager<IdentityUser> _userManager;
@@ -66,6 +69,17 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices
                     }
                 }
             }
+
+            if (!await (_context.Employees.AnyAsync()))
+            {
+                if (employeesDefault?.Count() > 0)
+                {
+                    foreach (var employeeName in employeesDefault)
+                    {
+                        await CreateEmployeeAsync(employeeName);
+                    }
+                }
+            }
         }
         private async Task CreateDepartmentAsync(string name)
         {
@@ -89,6 +103,32 @@ namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices
                 designation = new Designation();
                 designation.Name = name;
                 await _context.Designations.AddAsync(designation);
+                await _context.SaveChangesAsync();
+            }
+
+        }
+        private async Task CreateEmployeeAsync(string name)
+        {
+
+            var employee = _context.Employees.Where(a => a.Name.ToLower() == name).FirstOrDefault();
+            if (employee == null)
+            {
+                employee = new Employee();
+                employee.Name = name;
+                employee.Email =string.Empty;
+                employee.Phone = string.Empty;
+                employee.Address = string.Empty;
+                employee.ImageUrl = string.Empty;
+
+                var designation = _context.Designations.FirstOrDefault();
+                employee.DesignationId = designation?.Id ?? new Guid();
+
+                var depaertment = _context.Departments.FirstOrDefault();
+                employee.DepartmentId = depaertment?.Id ?? new Guid();
+
+
+
+                await _context.Employees.AddAsync(employee);
                 await _context.SaveChangesAsync();
             }
 
