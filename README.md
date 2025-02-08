@@ -1,8 +1,8 @@
 for running the code please follow the instruction
 <br>
-//stand alone
+//docker compose
 <br>
-<code> update-database -Context AuthDBContext </code>
+<code> docker compose up -d --build </code>
 <br>
 
 
