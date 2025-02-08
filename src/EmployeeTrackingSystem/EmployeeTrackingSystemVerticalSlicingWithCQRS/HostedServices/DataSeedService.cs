@@ -1,4 +1,7 @@
-﻿namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices
+﻿using EmployeeTrackingSystemVerticalSlicingWithCQRS.Data.DbContexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace EmployeeTrackingSystemVerticalSlicingWithCQRS.HostedServices
 {
     public class DataSeedService : IHostedService
     {
@@ -12,6 +15,15 @@
         {
             using (var scope = serviceProvider.CreateScope())
             {
+
+                #region UpdateDatabase
+                var authDbContext = scope.ServiceProvider.GetRequiredService<AuthDBContext>();
+                authDbContext.Database.Migrate();
+
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate();
+                #endregion
+
                 var seeder = scope.ServiceProvider.GetRequiredService<DataInitailizer>();
                 await seeder.SeedAsync();
             }
